@@ -16,9 +16,13 @@ function App() {
     setTodo(newTodo)
   }
 
+  const deleteTodo = () => {
+    setTodo(null)
+  }
+
   return (
     <div className="App">
-      <button className="delete-button" disabled={todo ? false : true}>削除</button>
+      <button className="delete-button" onClick={deleteTodo} disabled={todo ? false : true}>削除</button>
       {todo && (
         <Todo todo={todo} />
       )}
