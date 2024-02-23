@@ -7,7 +7,12 @@ function App() {
   const [todo, setTodo] = useState(null)
   const [completedTodos, setCompletedTodos] = useState([])
 
+  const hasTodo = todo !== null
+  const hasCompletedTodos = completedTodos.length > 0
+
   const addTodo = (todoText) => {
+    if (hasTodo) return
+
     const newTodo = {
       id: Math.random(),
       text: todoText,
@@ -19,6 +24,7 @@ function App() {
   }
 
   const deleteTodo = () => {
+    if (!hasTodo) return 
     setTodo(null)
   }
 
@@ -53,6 +59,7 @@ function App() {
   }
 
   const deleteAllCompletedTodo = () => {
+    if (!hasCompletedTodos) return 
     setCompletedTodos([])
   }
 
@@ -63,12 +70,12 @@ function App() {
 
   return (
     <div className="App">
-      <button className="delete-button" onClick={deleteTodo} disabled={todo ? false : true}>削除</button>
-      {todo && (
+      <button className="delete-button" onClick={deleteTodo} disabled={!hasTodo}>削除</button>
+      {hasTodo && (
         <Todo todo={todo} onCompleteTodo={completeTodo} onToggleEditTodo={toggleEditTodo} onSaveTodo={saveTodo} />
       )}
-      <AddTodoForm onAddTodo={addTodo} disabled={todo ? true : false} />
-      <button className="all-delete-button" disabled={completedTodos.length > 0 ? false : true} onClick={deleteAllCompletedTodo}>全て削除</button>
+      <AddTodoForm onAddTodo={addTodo} disabled={hasTodo} />
+      <button className="all-delete-button" disabled={!hasCompletedTodos} onClick={deleteAllCompletedTodo}>全て削除</button>
       <CompletedTodoList completedTodos={completedTodos} onDeleteCompletedTodo={deleteCompletedTodo} />
     </div>
   );
