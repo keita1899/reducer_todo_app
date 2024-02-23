@@ -20,11 +20,28 @@ function App() {
     setTodo(null)
   }
 
+  const toggleEditTodo = () => {
+    setTodo({
+      ...todo,
+      isEdit: !todo.isEdit
+    })
+  }
+
+  const saveTodo = (todoText) => {
+    const newTodo = {
+      ...todo,
+      text: todoText,
+      isEdit: false
+    }
+
+    setTodo(newTodo)
+  }
+
   return (
     <div className="App">
       <button className="delete-button" onClick={deleteTodo} disabled={todo ? false : true}>削除</button>
       {todo && (
-        <Todo todo={todo} />
+        <Todo todo={todo} onToggleEditTodo={toggleEditTodo} onSaveTodo={saveTodo} />
       )}
       <AddTodoForm onAddTodo={addTodo} disabled={todo ? true : false} />
     </div>
