@@ -52,6 +52,10 @@ function App() {
     setTodo(null)
   }
 
+  const deleteAllCompletedTodo = () => {
+    setCompletedTodos([])
+  }
+
   return (
     <div className="App">
       <button className="delete-button" onClick={deleteTodo} disabled={todo ? false : true}>削除</button>
@@ -59,7 +63,7 @@ function App() {
         <Todo todo={todo} onCompleteTodo={completeTodo} onToggleEditTodo={toggleEditTodo} onSaveTodo={saveTodo} />
       )}
       <AddTodoForm onAddTodo={addTodo} disabled={todo ? true : false} />
-      <button className="all-delete-button" disabled={completedTodos.length > 0 ? false : true}>全て削除</button>
+      <button className="all-delete-button" disabled={completedTodos.length > 0 ? false : true} onClick={deleteAllCompletedTodo}>全て削除</button>
       <CompletedTodoList completedTodos={completedTodos} />
     </div>
   );
