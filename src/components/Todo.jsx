@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export const Todo = ({todo, onToggleEditTodo, onSaveTodo}) => {
+export const Todo = ({todo, onCompleteTodo, onToggleEditTodo, onSaveTodo}) => {
   const [updateTodoText, setUpdateTodoText] = useState(todo.text)
 
   const handleToggleEditTodo = () => {
@@ -12,12 +12,16 @@ export const Todo = ({todo, onToggleEditTodo, onSaveTodo}) => {
       onSaveTodo(updateTodoText)
     }
   }
+
+  const handleCompleteTodo = () => {
+    onCompleteTodo()
+  }
   
   return (
     <div>
       {!todo.isEdit && 
         <div className="todo">
-          <button className="complete-button">完了</button>
+          <button className="complete-button" onClick={handleCompleteTodo}>完了</button>
           <span className="todo-text">{todo.text}</span>
           <button className="edit-button" onClick={handleToggleEditTodo}>編集</button>
         </div>

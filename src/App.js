@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { AddTodoForm } from "./components/AddTodoForm";
 import { Todo } from "./components/Todo";
+import { CompletedTodoList } from "./components/CompletedTodoList";
 
 function App() {
   const [todo, setTodo] = useState(null)
+  const [completedTodos, setCompletedTodos] = useState([])
 
   const addTodo = (todoText) => {
     const newTodo = {
@@ -37,13 +39,28 @@ function App() {
     setTodo(newTodo)
   }
 
+  const completeTodo = () => {
+    const newCompletedTodo = {
+      id: todo.id,
+      text: todo.text,
+      isCompleted: true
+    }
+    setCompletedTodos([
+      ...completedTodos,
+      newCompletedTodo
+    ])
+    setTodo(null)
+  }
+
   return (
     <div className="App">
       <button className="delete-button" onClick={deleteTodo} disabled={todo ? false : true}>削除</button>
       {todo && (
-        <Todo todo={todo} onToggleEditTodo={toggleEditTodo} onSaveTodo={saveTodo} />
+        <Todo todo={todo} onCompleteTodo={completeTodo} onToggleEditTodo={toggleEditTodo} onSaveTodo={saveTodo} />
       )}
       <AddTodoForm onAddTodo={addTodo} disabled={todo ? true : false} />
+      <button className="all-delete-button" disabled={completedTodos.length > 0 ? false : true}>全て削除</button>
+      <CompletedTodoList completedTodos={completedTodos} />
     </div>
   );
 }
